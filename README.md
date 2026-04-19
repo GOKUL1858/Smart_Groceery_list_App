@@ -15,12 +15,13 @@ A mobile application built with React Native (Expo) and Node.js/Express/MongoDB 
 1. Go to `backend` folder.
 2. Install dependencies: `npm install`
 3. Create `.env` file with `MONGO_URI` and `JWT_SECRET`.
-4. Start server: `npm start` (or `npm run dev` with nodemon).
+4. For deployed frontend access, set `FRONTEND_URLS` to a comma-separated list such as `https://smart-grocery-list-app.vercel.app,https://smart-grocery-list-app-2.vercel.app`.
+5. Start server: `npm start` (or `npm run dev` with nodemon).
 
 ### Frontend
 1. Go to `frontend` folder.
 2. Install dependencies: `npm install`
-3. Update `BASE_URL` in `src/services/api.js` with your IP address.
+3. Set `EXPO_PUBLIC_API_URL` to your backend URL, for example `https://your-render-service.onrender.com/api`.
 4. Start Expo: `npx expo start`
 
 ## Evaluation Rubrics Met

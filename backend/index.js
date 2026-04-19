@@ -6,15 +6,33 @@ require('dotenv').config();
 const app = express();
 
 const allowedOrigins = [
-  process.env.FRONTEND_URL || 'http://localhost:19006',
+  'http://localhost:19006',
+  'http://localhost:3000',
+  ...(process.env.FRONTEND_URLS || '')
+    .split(',')
+    .map((origin) => origin.trim())
+    .filter(Boolean),
+  ...(process.env.FRONTEND_URL ? [process.env.FRONTEND_URL.trim()] : []),
 ];
+
+const isAllowedOrigin = (origin) => {
+  if (!origin) {
+    return true;
+  }
+
+  if (allowedOrigins.includes(origin)) {
+    return true;
+  }
+
+  return /^https:\/\/smart-grocery-list-app(?:-[a-z0-9-]+)?\.vercel\.app$/i.test(origin);
+};
 
 app.use(cors({
   origin: (origin, callback) => {
-    if (!origin || allowedOrigins.includes(origin)) {
+    if (isAllowedOrigin(origin)) {
       callback(null, true);
     } else {
-      callback(new Error('CORS policy: Origin not allowed'));
+      callback(new Error(`CORS policy: Origin not allowed (${origin})`));
     }
   },
   credentials: true,
